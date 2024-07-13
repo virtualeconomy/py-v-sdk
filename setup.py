@@ -27,9 +27,9 @@ setuptools.setup(
     license="MIT",
     packages=setuptools.find_packages(),
     install_requires=[
-        "aiohttp=3.9.5",
+        "aiohttp~=3.9.5",
         "python-axolotl-curve25519 @ git+https://github.com/hannob/python-axolotl-curve25519.git@fix_type#egg=python-axolotl-curve25519",
-        "tiny_keccak",
+        "tiny_keccak~=0.2.1",
         "base58~=2.1.1",
         "loguru~=0.7.2",
     ],
