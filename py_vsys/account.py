@@ -15,7 +15,6 @@ if TYPE_CHECKING:
 from py_vsys import model as md
 from py_vsys import tx_req as tx
 from py_vsys import dbput as dp
-from py_vsys.utils.crypto import hashes as hs
 from py_vsys.utils.crypto import curve_25519 as curve
 from py_vsys import words as wd
 from py_vsys.contract import tok_ctrt_factory as tcf
@@ -80,11 +79,7 @@ class Wallet:
 
         acnt_seed_hash = (self.seed).get_acnt_seed_hash(md.Nonce(nonce))
         key_pair = acnt_seed_hash.key_pair
-        return Account(
-            chain=chain,
-            pri_key=key_pair.pri,
-            pub_key=key_pair.pub
-        )
+        return Account(chain=chain, pri_key=key_pair.pri, pub_key=key_pair.pub)
 
     @staticmethod
     def new_seed() -> md.Seed:
@@ -118,7 +113,9 @@ class Account:
     Account is a class for an account on the chain.
     """
 
-    def __init__(self, chain: ch.Chain, pri_key: md.PriKey, pub_key: md.PubKey=None) -> Account:
+    def __init__(
+        self, chain: ch.Chain, pri_key: md.PriKey, pub_key: md.PubKey = None
+    ) -> Account:
         """
         Args:
             chain (ch.Chain): The chain that the account is on.
@@ -128,7 +125,7 @@ class Account:
 
         self._chain = chain
 
-        if(not pub_key):
+        if not pub_key:
             pub_key = md.PubKey.from_bytes(curve.gen_pub_key(pri_key.bytes))
 
         self.key_pair = md.KeyPair(pub_key, pri_key)
@@ -142,7 +139,7 @@ class Account:
         Args:
             chain (ch.Chain): The chain where the account is on.
             priKey (str): The private key string.
-        
+
         Returns:
             Account: The new Account instance.
         """
