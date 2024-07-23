@@ -4,11 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-python-axolotl-curve25519 = "~=0.4.1.post2"
+python-axolotl-curve25519 = {git = "https://github.com/hannob/python-axolotl-curve25519.git", ref = "fix_type"}
+tiny_keccak = "=0.2.1"
 base58 = "~=2.1.1"
-loguru = "~=0.5.3"
-aiohttp = "~=3.8.1"
-pysha3 = "~=1.0.2"
+loguru = "~=0.7.2"
+aiohttp = "~=3.9.5"
 
 [dev-packages]
 pylint = "~=2.12.2"

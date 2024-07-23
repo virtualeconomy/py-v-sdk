@@ -8,7 +8,7 @@ with open(os.path.join(this_dir, "README.md")) as f:
 
 setuptools.setup(
     name="py-vsys",
-    version="0.2.1",
+    version="0.2.2",
     description="The official Python SDK for VSYS APIs",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -27,10 +27,11 @@ setuptools.setup(
     license="MIT",
     packages=setuptools.find_packages(),
     install_requires=[
-        "aiohttp~=3.8.1",
-        "python-axolotl-curve25519~=0.4.1.post2",
+        "aiohttp~=3.9.5",
+        "python-axolotl-curve25519 @ git+https://github.com/hannob/python-axolotl-curve25519.git@fix_type#egg=python-axolotl-curve25519",
+        "tiny_keccak~=0.2.1",
         "base58~=2.1.1",
-        "loguru~=0.5.3",
+        "loguru~=0.7.2",
     ],
-    python_requires=">=3.7",
+    python_requires=">=3.8",
 )

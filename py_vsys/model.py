@@ -352,7 +352,7 @@ class Addr(FixedSizeB58Str):
             chain_id (ch.ChainID): The chain ID.
 
         Returns:
-            Addr: The generated address.        
+            Addr: The generated address.
         """
 
         def ke_bla_hash(b: bytes) -> bytes:
@@ -513,7 +513,6 @@ class CtrtMetaBytesList:
 
 
 class CtrtMeta:
-
     LANG_CODE_BYTE_LEN = 4
     LANG_VER_BYTE_LEN = 4
     TOKEN_ADDR_VER = -124
@@ -1069,7 +1068,7 @@ class Bool(Model):
             raise TypeError(f"Data in {cls_name} must be a bool")
 
 
-class KeyPair():
+class KeyPair:
     """
     KeyPair is the data model for a key pair(public / private keys).
     """
@@ -1084,9 +1083,9 @@ class KeyPair():
         self.pri = pri_key
 
         self.validate()
-    
+
     def validate(self) -> None:
-        msg = bytes('abc', 'utf-8')
+        msg = bytes("abc", "utf-8")
         sig = curve.sign(self.pri.bytes, msg)
 
         is_valid = curve.verify_sig(self.pub.bytes, msg, sig)
