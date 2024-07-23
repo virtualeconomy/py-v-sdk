@@ -14,9 +14,9 @@ class TestAccount:
     TestAccount is the collection of functional tests of Account.
     """
 
-    PRI_KEY = "EV5stVcWZ1kEQhrS7qcfYQdHpMHM5jwkyRxi9n9kXteZ";
-    PUB_KEY = "4EyuJtDzQH15qAfnTPgqa8QB4ZU1dzqihdCs13UYEiV4";
-    ADDR = "ATuQXbkZV4dCKsoFtXSCH5eKw92dMXQdUYU";
+    PRI_KEY = "EV5stVcWZ1kEQhrS7qcfYQdHpMHM5jwkyRxi9n9kXteZ"
+    PUB_KEY = "4EyuJtDzQH15qAfnTPgqa8QB4ZU1dzqihdCs13UYEiV4"
+    ADDR = "ATuQXbkZV4dCKsoFtXSCH5eKw92dMXQdUYU"
 
     @pytest.fixture
     def supernode_addr(self) -> str:
@@ -61,7 +61,7 @@ class TestAccount:
         test_pri_only_cons tests constructing Account only with private key model.
 
         Args:
-            chain (pv.Chain): The chain.        
+            chain (pv.Chain): The chain.
         """
 
         acnt = pv.Account(chain, pv.PriKey(self.PRI_KEY))

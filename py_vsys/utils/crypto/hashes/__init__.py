@@ -19,6 +19,19 @@ def sha256_hash(b: bytes) -> bytes:
     return hashlib.sha256(b).digest()
 
 
+def sha512_hash(b: bytes) -> bytes:
+    """
+    sha512_hash hashes the given bytes with SHA512
+
+    Args:
+        b (bytes): bytes to hash
+
+    Returns:
+        bytes: The hash result
+    """
+    return hashlib.sha512(b).digest()
+
+
 def keccak256_hash(b: bytes) -> bytes:
     """
     keccak256_hash hashes the given bytes with KECCAK256

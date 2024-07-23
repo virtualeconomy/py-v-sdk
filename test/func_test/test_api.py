@@ -2,7 +2,6 @@
 test_api contains functional tests for py_vsys/api.py
 """
 import aiohttp
-import pytest
 
 import py_vsys as pv
 

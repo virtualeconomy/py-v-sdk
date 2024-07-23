@@ -4,6 +4,7 @@ E.g. generate key pair, sign, verify signature
 """
 from __future__ import annotations
 import os
+from typing import Optional
 
 import axolotl_curve25519 as curve
 
@@ -35,19 +36,21 @@ def gen_pub_key(pri_key: bytes) -> bytes:
     return curve.generatePublicKey(pri_key)
 
 
-def sign(pri_key: bytes, msg: bytes) -> bytes:
+def sign(pri_key: bytes, msg: bytes, rand: Optional[bytes] = None) -> bytes:
     """
     sign signs the given message with the given private key
 
     Args:
         pri_key (bytes): The private key
         msg (bytes): The message to sign
+        rand (bytes): The 64-bit random bytes
 
     Returns:
         bytes: The signature bytes
     """
-    rand64 = os.urandom(64)
-    return curve.calculateSignature(rand64, pri_key, msg)
+    if not rand:
+        rand = os.urandom(64)
+    return curve.calculateSignature(rand, pri_key, msg)
 
 
 def verify_sig(pub_key: bytes, msg: bytes, sig: bytes) -> bool:

@@ -222,7 +222,9 @@ class TestAtomicSwapCtrt:
 
         # taker lock.
         puzzle_db_key = pv.AtomicSwapCtrt.DBKey.for_swap_puzzle(maker_lock_tx_id)
-        resp = await acnt1._chain._api._ctrt.get_ctrt_data(maker_ctrt._ctrt_id.data,puzzle_db_key.b58_str)
+        resp = await acnt1._chain._api._ctrt.get_ctrt_data(
+            maker_ctrt._ctrt_id.data, puzzle_db_key.b58_str
+        )
         hashed_puzzle = resp["value"]
 
         puzzle_bytes2 = base58.b58decode(hashed_puzzle)
@@ -280,9 +282,11 @@ class TestAtomicSwapCtrt:
 
         # taker lock.
         puzzle_db_key = pv.AtomicSwapCtrt.DBKey.for_swap_puzzle(maker_lock_tx_id)
-        resp = await acnt1._chain._api._ctrt.get_ctrt_data(maker_ctrt._ctrt_id.data,puzzle_db_key.b58_str)
+        resp = await acnt1._chain._api._ctrt.get_ctrt_data(
+            maker_ctrt._ctrt_id.data, puzzle_db_key.b58_str
+        )
 
-        hashed_puzzle = resp["value"];
+        hashed_puzzle = resp["value"]
         puzzle_bytes2 = base58.b58decode(hashed_puzzle)
 
         taker_lock_timestamp = int(time.time()) + 1500
@@ -298,9 +302,7 @@ class TestAtomicSwapCtrt:
         await cft.assert_tx_success(api, taker_lock_tx_id)
 
         # maker solve
-        maker_solve_tx_info = await taker_ctrt.solve(
-            acnt0, taker_lock_tx_id, "abc"
-        )
+        maker_solve_tx_info = await taker_ctrt.solve(acnt0, taker_lock_tx_id, "abc")
         await cft.wait_for_block()
         maker_solve_id = maker_solve_tx_info["id"]
         await cft.assert_tx_success(api, maker_solve_id)
@@ -387,7 +389,5 @@ class TestAtomicSwapCtrt:
         taker_ctrt = new_taker_atomic_swap_ctrt
 
         await self.test_lock(acnt0, acnt1, maker_ctrt, taker_ctrt)
-        await self.test_solve(
-            acnt0, acnt1, maker_ctrt, taker_ctrt
-        )
+        await self.test_solve(acnt0, acnt1, maker_ctrt, taker_ctrt)
         await self.test_exp_withdraw(acnt0, acnt1, maker_ctrt)

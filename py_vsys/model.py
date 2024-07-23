@@ -4,13 +4,12 @@ model contains data model related resources.
 from __future__ import annotations
 import abc
 import time
-from typing import Any, Union, Tuple, List
+from typing import Any, Union, Tuple, List, Optional
 import struct
 
 import base58
 
 from py_vsys import chain as ch
-from py_vsys import words as wd
 from py_vsys.utils.crypto import hashes as hs
 from py_vsys.utils.crypto import curve_25519 as curve
 
@@ -198,17 +197,6 @@ class Seed(Str):
 
     def validate(self) -> None:
         super().validate()
-        cls_name = self.__class__.__name__
-
-        words = self.data.split(" ")
-        if len(words) != self.WORD_CNT:
-            raise ValueError(
-                f"Data in {cls_name} must consist exactly {self.WORD_CNT} words"
-            )
-
-        for w in words:
-            if not w in wd.WORDS_SET:
-                raise ValueError(f"Data in {cls_name} contains invalid words")
 
     def get_acnt_seed_hash(self, nonce: Nonce) -> B58Str:
         """
@@ -743,6 +731,19 @@ class PubKey(FixedSizeB58Str):
 
     BYTES_LEN = 32
 
+    def verify(self, msg: bytes, sig: bytes) -> bool:
+        """
+        verify verifies the given signature & message.
+
+        Args:
+            msg: (bytes): The message to verify.
+            sig: (bytes): The signature to verify.
+        
+        Returns:
+            bool: If the signature is valid.
+        """
+        return curve.verify_sig(self.bytes, msg, sig)
+
 
 class PriKey(FixedSizeB58Str):
     """
@@ -750,6 +751,20 @@ class PriKey(FixedSizeB58Str):
     """
 
     BYTES_LEN = 32
+
+    def sign(self, msg: bytes, rand: Optional[bytes]) -> Bytes:
+        """
+        sign signs the given message & return the signature.
+
+        Args:
+            msg: (bytes): the message to sign.
+        
+        Returns:
+            Bytes: The signature of the given message.
+        """
+
+        b = curve.sign(self.bytes, msg, rand)
+        return Bytes(b)
 
 
 class Int(Model):

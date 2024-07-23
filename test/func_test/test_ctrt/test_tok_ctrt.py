@@ -352,6 +352,26 @@ class TestTokCtrtWithoutSplitV2Whitelist(TestTokCtrtWithoutSplit):
 
         await tc.update_list_user(acnt0, acnt0.addr.data, True)
         await tc.update_list_user(acnt0, acnt1.addr.data, True)
+        await cft.wait_for_block()
+
+        return tc
+
+    @pytest.fixture
+    async def new_ctrt_with_empty_list(
+        self, acnt0: pv.Account
+    ) -> pv.TokCtrtWithoutSplitV2Whitelist:
+        """
+        new_ctrt_with_empty_list is the fixture that registers a new token contract with empty white list.
+
+        Args:
+            acnt0 (pv.Account): the account of nonce 0.
+
+        Returns:
+            pv.TokCtrtWithoutSplitV2Whitelist: the TokCtrtWithoutSplitV2Whitelist instance.
+        """
+        tc = await pv.TokCtrtWithoutSplitV2Whitelist.register(acnt0, 50, 1)
+        await cft.wait_for_block()
+
         return tc
 
     @pytest.fixture
@@ -425,7 +445,7 @@ class TestTokCtrtWithoutSplitV2Whitelist(TestTokCtrtWithoutSplit):
 
     async def test_update_list_user(
         self,
-        new_ctrt: pv.TokCtrtWithoutSplitV2Whitelist,
+        new_ctrt_with_empty_list: pv.TokCtrtWithoutSplitV2Whitelist,
         acnt0: pv.Account,
         acnt1: pv.Account,
     ):
@@ -433,12 +453,12 @@ class TestTokCtrtWithoutSplitV2Whitelist(TestTokCtrtWithoutSplit):
         test_update_list_user tests the method update_list_user.
 
         Args:
-            new_ctrt (pv.TokCtrtWithoutSplitV2Whitelist): The fixture that registers a new token contract V2 with whitelist.
+            new_ctrt_with_empty_list (pv.TokCtrtWithoutSplitV2Whitelist): The fixture that registers a new token contract V2 with empty whitelist.
             acnt0 (pv.Account): The account of nonce 0.
             acnt1 (pv.Account): The account of nonce 1.
         """
 
-        tc = new_ctrt
+        tc = new_ctrt_with_empty_list
         api = tc.chain.api
 
         in_list = await tc.is_user_in_list(acnt1.addr.data)
@@ -468,7 +488,7 @@ class TestTokCtrtWithoutSplitV2Whitelist(TestTokCtrtWithoutSplit):
 
     async def test_update_list_ctrt(
         self,
-        new_ctrt: pv.TokCtrtWithoutSplitV2Whitelist,
+        new_ctrt_with_empty_list: pv.TokCtrtWithoutSplitV2Whitelist,
         acnt0: pv.Account,
         arbitrary_ctrt_id: str,
     ):
@@ -476,11 +496,11 @@ class TestTokCtrtWithoutSplitV2Whitelist(TestTokCtrtWithoutSplit):
         test_update_list_ctrt tests the method update_list_ctrt.
 
         Args:
-            new_ctrt (pv.TokCtrtWithoutSplitV2Whitelist): The fixture that registers a new token contract V2 with whitelist.
+            new_ctrt_with_empty_list (pv.TokCtrtWithoutSplitV2Whitelist): The fixture that registers a new token contract V2 with empty whitelist.
             acnt0 (pv.Account): The account of nonce 0.
             arbitrary_ctrt_id (str): An arbitrary contract ID
         """
-        tc = new_ctrt
+        tc = new_ctrt_with_empty_list
         api = tc.chain.api
         target_ctrt_id = arbitrary_ctrt_id
 

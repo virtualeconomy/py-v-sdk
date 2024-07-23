@@ -112,10 +112,26 @@ Define a new NFT and issue it. Only the issuer of the contract instance can take
 ```python
 import py_vsys as pv
 
+# issue an NFT without content
 # acnt: pv.Account
 # nc: pv.NFTCtrt
 
 resp = await nc.issue(by=acnt)
+print(resp)
+
+# issue an NFT with content
+# acnt: pv.Account
+# nc: pv.NFTCtrt
+# content: str
+#
+# content json sample:
+# {
+#	"name": "The name of the NFT",
+#	"description": "The description of the NFT",
+#	"content": "the url of the image or file",
+#	"properties": {},
+# }
+resp = await nc.issue(by=acnt,content=content)
 print(resp)
 ```
 Example output
